@@ -18,31 +18,6 @@ jobs:
         with:
           java-version: '11'  # Change the Java version if needed
           distribution: 'adopt' # Specify the distribution for Java 11
-          
-      - name: Create temporary directory
-        run: mkdir app
-
-      - name: Move code to temporary directory
-        run: mv * app/
-
+        
       - name: Build with Maven
-        working-directory: app  # Set working directory to tmp
         run: mvn clean package
-
-      - name: Build Docker image
-        run: |
-          cd app
-          docker build -t my-spring-app .
-
-      - name: SSH into EC2 instance and deploy
-        uses: appleboy/ssh-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
-          script: |
-            docker stop my-spring-app || true
-            docker rm my-spring-app || true
-            docker rmi my-spring-app || true
-            docker pull my-spring-app:latest
-            docker run -d -p 8080:8080 --name my-spring-app my-spring-app:latest
