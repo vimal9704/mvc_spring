@@ -33,6 +33,16 @@ jobs:
         run: |
           cp /home/runner/work/mvc_spring/mvc_spring/target/SpringMVC-0.0.1-SNAPSHOT.war $GITHUB_WORKSPACE/springMVC.war
           docker build -t my-spring-app .
+          
+      - name: Log in to Docker Hub
+        run: echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          
+      - name: Push Docker image to Docker Hub (if needed)
+        run: |
+          docker push my-spring-app    
 
       - name: SSH into EC2 instance and deploy
         uses: appleboy/ssh-action@master
@@ -41,9 +51,7 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            docker stop my-spring-app || true
-            docker rm my-spring-app || true
-            docker rmi my-spring-app || true
-            docker pull my-spring-app:latest
-            docker run -d -p 8080:8080 --name my-spring-app my-spring-app:latest
-
+            docker stop my-container || true
+            docker rm my-container || true
+            docker pull my-docker-image
+            docker run -d --name my-container -p 80:80 my-spring-app
