@@ -17,7 +17,8 @@ jobs:
         uses: actions/setup-java@v2
         with:
           java-version: '11'  # Change the Java version if needed
-
+          distribution: 'adopt' # Specify the distribution for Java 11
+          
       - name: Create temporary directory
         run: mkdir tmp
 
