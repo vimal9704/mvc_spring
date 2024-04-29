@@ -8,31 +8,27 @@
   <name>SpringMVC Maven Webapp</name>
   <url>http://maven.apache.org</url>
   <dependencies>
+    <!-- Spring Web MVC -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+      <version>5.3.9</version> <!-- Latest stable version -->
+    </dependency>
+
+    <!-- Tomcat Jasper -->
+    <dependency>
+      <groupId>org.apache.tomcat</groupId>
+      <artifactId>tomcat-jasper</artifactId>
+      <version>9.0.53</version> <!-- Latest stable version -->
+    </dependency>
+
+    <!-- JUnit -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.13.2</version> <!-- Latest stable version -->
       <scope>test</scope>
     </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc -->
-<dependency>
-    <groupId>org.springframework</groupId>
-    <artifactId>spring-webmvc</artifactId>
-    <version>5.1.1.RELEASE</version>
-</dependency>
-
-<!-- https://mvnrepository.com/artifact/org.apache.tomcat/tomcat-jasper -->
-<dependency>
-    <groupId>org.apache.tomcat</groupId>
-    <artifactId>tomcat-jasper</artifactId>
-    <version>9.0.12</version>
-</dependency>
-    <!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-<dependency>  
-    <groupId>javax.servlet</groupId>  
-    <artifactId>servlet-api</artifactId>  
-    <version>3.0-alpha-1</version>  
-</dependency>    
   </dependencies>
   <build>
     <finalName>SpringMVC</finalName>
