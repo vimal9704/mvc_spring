@@ -20,18 +20,18 @@ jobs:
           distribution: 'adopt' # Specify the distribution for Java 11
           
       - name: Create temporary directory
-        run: mkdir tmp
+        run: mkdir app
 
       - name: Move code to temporary directory
-        run: mv * tmp/
+        run: mv * app/
 
       - name: Build with Maven
-        working-directory: tmp  # Set working directory to tmp
+        working-directory: app  # Set working directory to tmp
         run: mvn clean package
 
       - name: Build Docker image
         run: |
-          cd tmp
+          cd app
           docker build -t my-spring-app .
 
       - name: SSH into EC2 instance and deploy
