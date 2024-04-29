@@ -12,9 +12,25 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - name: Install Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'  # Change the Java version if needed
+
+      - name: Create temporary directory
+        run: mkdir tmp
+
+      - name: Move code to temporary directory
+        run: mv * tmp/
+
+      - name: Build with Maven
+        working-directory: tmp  # Set working directory to tmp
+        run: mvn clean package
 
       - name: Build Docker image
         run: |
+          cd tmp
           docker build -t my-spring-app .
 
       - name: SSH into EC2 instance and deploy
